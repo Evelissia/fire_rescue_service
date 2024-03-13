@@ -1,9 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { registerValidation } from './validations/auth.js';
+import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
 import checkAuth from './utils/checkAuth.js';
 import * as UserController from './controllers/UserController.js';
+import * as PostController from './controllers/PostControllers.js';
 
 mongoose
   .connect(
@@ -16,10 +17,21 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/login', UserController.login);
+app.post('/auth/login', loginValidation, UserController.login);
 app.post('/auth/register', registerValidation, UserController.register);
 //роут на получение информации о пользователе
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+// роут на получение записей
+//app.get('/posts', checkAuth, PostController.getAll);
+// запрос на получение одной записи
+//app.get('/posts/:id', checkAuth, PostController.getOne);
+//запрос на создание записи
+app.post('/posts', checkAuth, postCreateValidation, PostController.create);
+//запрос на удаление записи
+//app.delete('/posts', checkAuth, PostController.remove);
+//запрос на обновление записи
+//app.patch('/posts', checkAuth, PostController.update);
 
 app.listen(4444, (err) => {
   if (err) {
