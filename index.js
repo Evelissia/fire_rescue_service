@@ -28,6 +28,11 @@ app.post(
   FireReportController.createFireReport,
 );
 
+app.get('/fireReports', FireReportController.getAllFireReports);
+app.get('/fireReports/:id', FireReportController.getOneFireReport);
+app.delete('/fireReports/:id', checkAuth, FireReportController.remove);
+app.patch('/fireReports/:id', checkAuth, FireReportController.update);
+
 app.listen(4444, (err) => {
   if (err) {
     return console.log(err);
