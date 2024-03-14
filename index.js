@@ -23,15 +23,15 @@ app.post('/auth/register', registerValidation, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 // роут на получение записей
-//app.get('/posts', checkAuth, PostController.getAll);
+app.get('/posts', PostController.getAll);
 // запрос на получение одной записи
-//app.get('/posts/:id', checkAuth, PostController.getOne);
+app.get('/posts/:id', PostController.getOne);
 //запрос на создание записи
 app.post('/posts', checkAuth, postCreateValidation, PostController.create);
 //запрос на удаление записи
-//app.delete('/posts', checkAuth, PostController.remove);
+app.delete('/posts/:id', checkAuth, PostController.remove);
 //запрос на обновление записи
-//app.patch('/posts', checkAuth, PostController.update);
+app.patch('/posts/:id', checkAuth, PostController.update);
 
 app.listen(4444, (err) => {
   if (err) {
