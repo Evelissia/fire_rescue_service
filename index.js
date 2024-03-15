@@ -5,6 +5,7 @@ import { registerValidation, loginValidation, fireReportCreateValidation } from 
 import checkAuth from './utils/checkAuth.js';
 import * as UserController from './controllers/UserController.js';
 import * as FireReportController from './controllers/FireReportControllers.js';
+import * as FireResourcesController from './controllers/FireResourcesControllers.js';
 
 mongoose
   .connect(
@@ -17,21 +18,24 @@ const app = express();
 
 app.use(express.json());
 
+// collection users
 app.post('/auth/login', loginValidation, UserController.login);
 app.post('/auth/register', registerValidation, UserController.register);
-//роут на получение информации о пользователе
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+//collection reports
 app.post(
   '/fireReports',
   checkAuth,
   fireReportCreateValidation,
   FireReportController.createFireReport,
 );
-
 app.get('/fireReports', FireReportController.getAllFireReports);
 app.get('/fireReports/:id', FireReportController.getOneFireReport);
 app.delete('/fireReports/:id', checkAuth, FireReportController.remove);
 app.patch('/fireReports/:id', checkAuth, FireReportController.update);
+
+// collection resources
 
 app.listen(4444, (err) => {
   if (err) {
