@@ -1,6 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { registerValidation, loginValidation, fireReportCreateValidation } from './validation.js';
+import {
+  registerValidation,
+  loginValidation,
+  fireReportCreateValidation,
+  fileResourceCreateValidation,
+} from './validation.js';
 
 import checkAuth from './utils/checkAuth.js';
 import * as UserController from './controllers/UserController.js';
@@ -36,6 +41,13 @@ app.delete('/fireReports/:id', checkAuth, FireReportController.remove);
 app.patch('/fireReports/:id', checkAuth, FireReportController.update);
 
 // collection resources
+app.post(
+  '/FireResources',
+  checkAuth,
+  fileResourceCreateValidation,
+  FireResourcesController.createFireResource,
+);
+app.get('/FireResources', FireResourcesController.getAllFireResources);
 
 app.listen(4444, (err) => {
   if (err) {

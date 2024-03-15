@@ -13,9 +13,27 @@ export const loginValidation = [
 ];
 
 export const fireReportCreateValidation = [
-  body('location.latitude', 'Неверный формат широты').isFloat(),
-  body('location.longitude', 'Неверный формат долготы').isFloat(),
+  body('location.street', 'Неверный формат улицы').isFloat(),
+  body('location.house', 'Неверный формат дома').isFloat(),
+  body('location.apartment', 'Неверный формат квартиры').isFloat(),
   body('dangerLevel', 'Укажите уровень опасности').isString(),
   body('areaSize', 'Укажите размер площади').isNumeric(),
   body('description', 'Введите описание пожара').isString(),
+];
+
+export const fileResourceCreateValidation = [
+  body('name', 'Укажите название ресурса').isLength({ min: 3 }).isString(),
+  body('type', 'Выберите тип ресурса из предложенного списка').isIn([
+    'fire truck',
+    'ambulance',
+    'rescue vehicle',
+    'helicopter',
+    'fireboat',
+    'medical tent',
+  ]),
+  body('status', 'Выберите статус ресурса из предложенного списка').isIn([
+    'available',
+    'busy',
+    'maintenance',
+  ]),
 ];

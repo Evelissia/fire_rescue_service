@@ -4,8 +4,9 @@ const FireReportSchema = new mongoose.Schema(
   {
     location: {
       type: {
-        latitude: Number,
-        longitude: Number,
+        street: String, // улица
+        house: String, // дом
+        apartment: String, // квартира
       },
       required: true,
     },
@@ -23,7 +24,7 @@ const FireReportSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true,
     },
   },
