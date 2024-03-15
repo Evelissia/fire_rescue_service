@@ -48,6 +48,9 @@ app.post(
   FireResourcesController.createFireResource,
 );
 app.get('/FireResources', FireResourcesController.getAllFireResources);
+app.get('/FireResources/:id', FireResourcesController.getOneFireResource);
+app.delete('/FireResources/:id', checkAuth, FireResourcesController.remove);
+app.patch('/FireResources/:id', checkAuth, FireResourcesController.update);
 
 app.listen(4444, (err) => {
   if (err) {
