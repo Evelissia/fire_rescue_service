@@ -22,7 +22,9 @@ export const createFireResource = async (req, res) => {
 
 export const getAllFireResources = async (req, res) => {
   try {
-    const fireResources = await FireResourceModel.find().populate('user').exec();
+    const fireResources = await FireResourceModel.find()
+      .populate({ path: 'user', select: ['fullName', 'avatarUrl'] })
+      .exec();
     res.json(fireResources);
   } catch (err) {
     console.log(err);

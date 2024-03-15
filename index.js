@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import mongoose from 'mongoose';
 import {
   registerValidation,
@@ -21,12 +22,30 @@ mongoose
 
 const app = express();
 
-app.use(express.json());
+// хранилище для картинок
+const storage = multer.diskStorage({
+  destination: (_, file, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
+const upload = multer({ storage });
+
+app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 // collection users
 app.post('/auth/login', loginValidation, UserController.login);
 app.post('/auth/register', registerValidation, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+  res.json({
+    url: `/uploads/${req.file.originalname}`,
+  });
+});
 
 //collection reports
 app.post(
@@ -38,7 +57,7 @@ app.post(
 app.get('/fireReports', FireReportController.getAllFireReports);
 app.get('/fireReports/:id', FireReportController.getOneFireReport);
 app.delete('/fireReports/:id', checkAuth, FireReportController.remove);
-app.patch('/fireReports/:id', checkAuth, FireReportController.update);
+app.patch('/fireReports/:id', checkAuth, fireReportCreateValidation, FireReportController.update);
 
 // collection resources
 app.post(
@@ -50,7 +69,12 @@ app.post(
 app.get('/FireResources', FireResourcesController.getAllFireResources);
 app.get('/FireResources/:id', FireResourcesController.getOneFireResource);
 app.delete('/FireResources/:id', checkAuth, FireResourcesController.remove);
-app.patch('/FireResources/:id', checkAuth, FireResourcesController.update);
+app.patch(
+  '/FireResources/:id',
+  checkAuth,
+  fileResourceCreateValidation,
+  FireResourcesController.update,
+);
 
 app.listen(4444, (err) => {
   if (err) {

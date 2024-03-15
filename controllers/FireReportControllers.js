@@ -23,7 +23,9 @@ export const createFireReport = async (req, res) => {
 
 export const getAllFireReports = async (req, res) => {
   try {
-    const fireReports = await FireReportModel.find().populate('user').exec();
+    const fireReports = await FireReportModel.find()
+      .populate({ path: 'user', select: ['name', 'avatar'] })
+      .exec();
     res.json(fireReports);
   } catch (err) {
     console.log(err);
