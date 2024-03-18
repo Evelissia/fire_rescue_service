@@ -13,9 +13,9 @@ export const loginValidation = [
 ];
 
 export const fireReportCreateValidation = [
-  body('location.street', 'Неверный формат улицы').isFloat(),
-  body('location.house', 'Неверный формат дома').isFloat(),
-  body('location.apartment', 'Неверный формат квартиры').isFloat(),
+  body('location.street', 'Неверный формат улицы').isString(),
+  body('location.house', 'Неверный формат дома').isString(),
+  body('location.apartment', 'Неверный формат квартиры').isString(),
   body('dangerLevel', 'Укажите уровень опасности').isString(),
   body('areaSize', 'Укажите размер площади').isNumeric(),
   body('description', 'Введите описание пожара').isString(),

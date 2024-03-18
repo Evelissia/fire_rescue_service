@@ -8,10 +8,12 @@ import {
   fileResourceCreateValidation,
 } from './validation.js';
 
-import checkAuth from './utils/checkAuth.js';
-import * as UserController from './controllers/UserController.js';
-import * as FireReportController from './controllers/FireReportControllers.js';
-import * as FireResourcesController from './controllers/FireResourcesControllers.js';
+import { handleValidationErrors, checkAuth } from './utils/index.js';
+import {
+  UserController,
+  FireReportController,
+  FireResourcesController,
+} from './controllers/index.js';
 
 mongoose
   .connect(
@@ -37,8 +39,8 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 // collection users
-app.post('/auth/login', loginValidation, UserController.login);
-app.post('/auth/register', registerValidation, UserController.register);
+app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
+app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
@@ -52,18 +54,26 @@ app.post(
   '/fireReports',
   checkAuth,
   fireReportCreateValidation,
+  handleValidationErrors,
   FireReportController.createFireReport,
 );
 app.get('/fireReports', FireReportController.getAllFireReports);
 app.get('/fireReports/:id', FireReportController.getOneFireReport);
 app.delete('/fireReports/:id', checkAuth, FireReportController.remove);
-app.patch('/fireReports/:id', checkAuth, fireReportCreateValidation, FireReportController.update);
+app.patch(
+  '/fireReports/:id',
+  checkAuth,
+  fireReportCreateValidation,
+  handleValidationErrors,
+  FireReportController.update,
+);
 
 // collection resources
 app.post(
   '/FireResources',
   checkAuth,
   fileResourceCreateValidation,
+  handleValidationErrors,
   FireResourcesController.createFireResource,
 );
 app.get('/FireResources', FireResourcesController.getAllFireResources);
@@ -73,6 +83,7 @@ app.patch(
   '/FireResources/:id',
   checkAuth,
   fileResourceCreateValidation,
+  handleValidationErrors,
   FireResourcesController.update,
 );
 
