@@ -22,6 +22,13 @@ const FireReportSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    resources: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FireResource',
+        required: true,
+      },
+    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

@@ -7,6 +7,7 @@ export const createFireReport = async (req, res) => {
       dangerLevel: req.body.dangerLevel,
       areaSize: req.body.areaSize,
       description: req.body.description,
+      resources: req.body.resources,
       user: req.userId,
     });
 
@@ -86,6 +87,7 @@ export const update = async (req, res) => {
         dangerLevel: req.body.dangerLevel,
         areaSize: req.body.areaSize,
         description: req.body.description,
+        resources: req.body.resources,
       },
     );
     res.json({
