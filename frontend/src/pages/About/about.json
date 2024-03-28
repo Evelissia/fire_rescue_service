@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Карточка 1",
+    "description": "Мы крутые",
+    "image": "/img/card1.png"
+  },
+  {
+    "title": "Карточка 2",
+    "description": "Описание карточки 2",
+    "image": "/img/card2.png"
+  },
+  {
+    "title": "Карточка 3",
+    "description": "Описание карточки 3",
+    "image": "/img/card3.png"
+  }
+]

@@ -1,7 +1,26 @@
 import React from 'react';
 import styles from './Header.module.scss';
-import { Container } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Container, Button } from '@mui/material';
+import { NavLink, useLocation } from 'react-router-dom';
+
+function CustomButton({ to, label }) {
+  const location = useLocation();
+
+  // Функция для проверки, является ли текущий путь активным для кнопки
+  const isActive = location.pathname === to;
+
+  // Стили для активного и неактивного состояния
+  const buttonStyles = {
+    color: isActive ? 'red' : 'black',
+    marginLeft: '43px',
+  };
+
+  return (
+    <Button style={buttonStyles} component={NavLink} to={to} color="inherit">
+      {label}
+    </Button>
+  );
+}
 
 export const Header = () => {
   return (
@@ -12,19 +31,10 @@ export const Header = () => {
             <div>LOGO</div>
           </a>
           <div className={styles.menuButton}>
-            {/* Используем Link для кнопок */}
-            <Link to="/about">
-              <button>О компании</button>
-            </Link>
-            <Link to="/services">
-              <button>Услуги</button>
-            </Link>
-            <Link to="/submit">
-              <button>Отправить заявку</button>
-            </Link>
-            <Link to="/status">
-              <button>Статус заявки</button>
-            </Link>
+            <CustomButton to="/about" label="О компании" />
+            <CustomButton to="/services" label="Услуги" />
+            <CustomButton to="/submit" label="Отправить заявку" />
+            <CustomButton to="/status" label="Статус заявки" />
           </div>
           <div className={styles.buttons}>
             <button variant="outlined" className={`${styles.btn1} ${styles.button}`}>

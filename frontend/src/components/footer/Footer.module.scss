@@ -1,0 +1,47 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+footer {
+  background-color: #bbbbbb;
+  margin-top: 50px;
+}
+
+.footerContainer {
+  width: 100%;
+  padding: 70px 30px 20px;
+}
+.socialIcons {
+  display: flex;
+  justify-content: center;
+}
+.footerContainer a {
+  text-decoration: none;
+  padding: 10px;
+  background-color: #fff;
+  margin: 25px;
+  border-radius: 50%;
+}
+
+.footerContainer a i {
+  font-size: 2em;
+  color: #E21249;
+  opacity: 0.9;
+}
+
+.socialIcons a:hover{
+  background-color: #E21249;
+  transition: 0.5s;
+}
+
+.socialIcons a:hover i{
+  color: white;
+  transition: 0.5s;
+}
+
+.footerBottom {
+  padding: 20px;
+  text-align: center;
+}
