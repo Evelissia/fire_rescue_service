@@ -1,0 +1,32 @@
+.wrapper{
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 1 auto;
+}
+.title_description{
+  padding: 45px 0;
+}
+
+.container{
+  margin: 0 auto;
+  max-width: 1145px;
+
+}
+
+.description_row{
+  display: flex;
+  justify-content: space-around;
+}
+
+.description_body{
+
+}
+
+.description_image{
+  border-radius: 15px;
+}
