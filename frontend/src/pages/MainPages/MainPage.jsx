@@ -3,6 +3,7 @@ import Titles from '../../components/Titles.jsx';
 import styles from '../../components/header/Header.module.scss';
 import Cards from '../../components/Cards/Cards.jsx';
 import jsonData from './data.json';
+import { Link } from 'react-router-dom';
 
 // в главной странице мне нужно создать
 
@@ -20,18 +21,23 @@ const MainPage = () => {
         />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div className={styles.buttons} style={{ marginLeft: '56px', marginTop: '20px' }}>
-            <button
-              style={{ height: '58px' }}
-              variant="outlined"
-              className={`${styles.btn2} ${styles.button}`}>
-              Отправить заявку
-            </button>
-            <button
-              style={{ marginLeft: '56px', height: '58px' }}
-              variant="contained"
-              className={`${styles.btn1} ${styles.button}`}>
-              О нас
-            </button>
+            <Link to="submit">
+              <button
+                style={{ height: '58px', cursor: 'pointer' }}
+                variant="outlined"
+                className={`${styles.btn2} ${styles.button}`}>
+                Отправить заявку
+              </button>
+            </Link>
+
+            <Link to="/about">
+              <button
+                style={{ height: '58px', cursor: 'pointer' }}
+                variant="outlined"
+                className={`${styles.btn1} ${styles.button}`}>
+                О нас
+              </button>
+            </Link>
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 33 }}>

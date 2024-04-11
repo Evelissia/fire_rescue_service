@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import { Container, Button } from '@mui/material';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 
 function CustomButton({ to, label }) {
   const location = useLocation();
@@ -34,15 +34,19 @@ export const Header = () => {
             <CustomButton to="/about" label="О компании" />
             <CustomButton to="/services" label="Услуги" />
             <CustomButton to="/submit" label="Отправить заявку" />
-            <CustomButton to="/status" label="Статус заявки" />
           </div>
           <div className={styles.buttons}>
-            <button variant="outlined" className={`${styles.btn1} ${styles.button}`}>
-              Войти
-            </button>
-            <button variant="contained" className={`${styles.btn2} ${styles.button}`}>
-              Создать аккаунт
-            </button>
+            <Link to="/login">
+              <button variant="outlined" className={`${styles.btn1} ${styles.button}`}>
+                Войти
+              </button>
+            </Link>
+
+            <Link to="/register">
+              <button variant="contained" className={`${styles.btn2} ${styles.button}`}>
+                Создать аккаунт
+              </button>
+            </Link>
           </div>
         </div>
       </Container>
