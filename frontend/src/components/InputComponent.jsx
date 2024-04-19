@@ -17,7 +17,6 @@ const InputComponent = ({ type, className, placeholder, errors, onChange }) => {
           value={value}
           type={type}
           required
-          name={className}
           placeholder={placeholder}
           className={className}
           onChange={change}></input>

@@ -43,7 +43,9 @@
   transition: .2s;
   cursor: pointer;
 }
-
+.form_title {
+  margin-bottom: 28px
+}
 .form__input {
   cursor: pointer;
   display: block;
@@ -59,6 +61,7 @@
   flex: 1;
   margin-right: 10px;
   margin-top: 50px;
+  margin-bottom: 28px !important;
 }
 .form__container {
 display: flex;
