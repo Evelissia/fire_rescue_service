@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './Header.module.scss';
 import { Container, Button } from '@mui/material';
 import { NavLink, Link, useLocation } from 'react-router-dom';
+import { selectIsAuth, logout } from '../../redux/slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 function CustomButton({ to, label }) {
   const location = useLocation();
@@ -23,6 +25,13 @@ function CustomButton({ to, label }) {
 }
 
 export const Header = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
+  const onClickLogout = () => {
+    if (window.confirm('Вы действительно хотите выйти?')) {
+      dispatch(logout());
+    }
+  };
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">
@@ -36,17 +45,37 @@ export const Header = () => {
             <CustomButton to="/submit" label="Отправить заявку" />
           </div>
           <div className={styles.buttons}>
-            <Link to="/login">
-              <button variant="outlined" className={`${styles.btn1} ${styles.button}`}>
-                Войти
-              </button>
-            </Link>
+            {isAuth ? (
+              <>
+                <Link to="/">
+                  <button variant="contained" className={`${styles.btn2} ${styles.button}`}>
+                    Создать отчет
+                  </button>
+                </Link>
+                <Link to="/">
+                  <button
+                    onClick={onClickLogout}
+                    variant="outlined"
+                    className={`${styles.btn1} ${styles.button}`}>
+                    Выйти
+                  </button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button variant="outlined" className={`${styles.btn1} ${styles.button}`}>
+                    Войти
+                  </button>
+                </Link>
 
-            <Link to="/register">
-              <button variant="contained" className={`${styles.btn2} ${styles.button}`}>
-                Создать аккаунт
-              </button>
-            </Link>
+                <Link to="/register">
+                  <button variant="contained" className={`${styles.btn2} ${styles.button}`}>
+                    Создать аккаунт
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </Container>

@@ -3,12 +3,14 @@ import InputComponent from '../../components/InputComponent.jsx';
 import Button from '../../components/Button.jsx';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { fetchAuth } from '../../redux/slices/auth.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAuth, selectIsAuth } from '../../redux/slices/auth.js';
+import { Navigate } from 'react-router-dom';
 
 // сделать запрос на то, чтобы сделать авторизацию
 
 const Login = () => {
+  const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
 
   const {
@@ -28,7 +30,9 @@ const Login = () => {
     dispatch(fetchAuth(values));
   };
 
-  console.log(errors, isValid);
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
 
   const handleLogin = () => {
     // Обработчик для авторизации
