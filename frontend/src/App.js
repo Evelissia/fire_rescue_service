@@ -1,4 +1,5 @@
 import { Header } from './components/header/Header.jsx';
+import React from 'react';
 import { Footer } from './components/footer/Footer.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPages from './pages/MainPages/MainPage.jsx';
@@ -8,10 +9,19 @@ import Submit from './pages/Submit/Submit.jsx';
 import Login from './pages/Login/Login.jsx';
 import Register from './pages/Reagistration/Registration.jsx';
 import './assets/style.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './index.css';
+import { fetchAuthMe, selectIsAuth } from './redux/slices/auth.js';
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
+
+  React.useEffect(() => {
+    dispatch(fetchAuthMe());
+  }, []);
+
   return (
     <Router>
       <div className="App">

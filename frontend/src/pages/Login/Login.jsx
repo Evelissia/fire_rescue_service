@@ -26,17 +26,22 @@ const Login = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = (values) => {
-    dispatch(fetchAuth(values));
+  const onSubmit = async (values) => {
+    const data = await dispatch(fetchAuth(values));
+
+    if (!data.payload) {
+      return alert('Не удалось авторизаваться');
+    }
+
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token);
+    }
   };
 
   if (isAuth) {
     return <Navigate to="/" />;
   }
 
-  const handleLogin = () => {
-    // Обработчик для авторизации
-  };
   return (
     <>
       <div className="wrapper">
@@ -64,7 +69,7 @@ const Login = () => {
                 fullWidth
               />
             </div>
-            <Button type="submit" label="Войти" onClick={handleLogin} />
+            <Button type="submit" label="Войти" />
           </form>
         </div>
       </div>
