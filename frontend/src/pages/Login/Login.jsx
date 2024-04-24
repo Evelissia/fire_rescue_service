@@ -16,7 +16,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
@@ -62,6 +61,7 @@ const Login = () => {
 
               <TextField
                 className="form__input password"
+                type="password"
                 label="Пароль"
                 error={Boolean(errors.password?.message)}
                 helperText={errors.password?.message}

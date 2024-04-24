@@ -1,12 +1,44 @@
 import { useState } from 'react';
-import InputComponent from '../../components/InputComponent.jsx';
 import Button from '../../components/Button.jsx';
+import TextField from '@mui/material/TextField';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRegister, selectIsAuth } from '../../redux/slices/auth.js';
+import { Navigate } from 'react-router-dom';
 
 const Registration = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const errors = ['err', 'err2'];
+  const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    mode: 'onChange',
+  });
+
+  const onSubmit = async (values) => {
+    const data = await dispatch(fetchRegister(values));
+
+    if (!data.payload) {
+      return alert('Не удалось зарегистрироваться');
+    }
+
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token);
+    }
+  };
+
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
 
   const handleRegister = () => {
     // Обработчик для регистрации
@@ -15,45 +47,47 @@ const Registration = () => {
     <>
       <div className="wrapper">
         <div className="content_body">
-          <form action="" className="form">
+          <form action="" onSubmit={handleSubmit(onSubmit)} className="form">
             <h1 className="form_title">Регистрация</h1>
 
             <div className="form__group">
-              <InputComponent
+              <TextField
                 type="text"
                 placeholder="Enter your name"
                 className="form__input name"
-                onChange={setName}
+                error={Boolean(errors.fullName?.message)}
+                helperText={errors.fullName?.message}
+                {...register('fullName', { required: 'Укажите имя' })}
+                fullWidth
               />
-              <InputComponent
+              <TextField
                 type="email"
                 placeholder="Enter your email"
                 className="form__input email"
-                onChange={setEmail}
+                error={Boolean(errors.email?.message)}
+                helperText={errors.email?.message}
+                {...register('email', { required: 'Укажите почту' })}
+                fullWidth
               />
-              <InputComponent
+              <TextField
                 type="password"
                 placeholder="Enter your password"
                 className="form__input password"
-                onChange={setPassword}
-              />
-            </div>
-
-            {/* Сделать сравнение на схожесть*/}
-            <div className="form__group">
-              <input
-                type="password"
-                id="confirm"
-                required
-                name="confirm_password"
-                placeholder="Enter your confirm password"
-                className="form__input"
+                error={Boolean(errors.password?.message)}
+                helperText={errors.password?.message}
+                {...register('password', { required: 'Введите пароль' })}
+                fullWidth
               />
             </div>
 
             <div className="errors" id="errors"></div>
 
-            <Button label="Зарегистрироваться" onClick={handleRegister} />
+            <Button
+              disabled={!isValid}
+              type="submit"
+              label="Зарегистрироваться"
+              onClick={handleRegister}
+            />
           </form>
         </div>
       </div>
