@@ -26,7 +26,7 @@ const MainPage = () => {
                 style={{ height: '58px', cursor: 'pointer' }}
                 variant="outlined"
                 className={`${styles.btn2} ${styles.button}`}>
-                Отправить заявку
+                Контакты
               </button>
             </Link>
 

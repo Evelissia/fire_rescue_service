@@ -43,7 +43,7 @@ export const Header = () => {
           <div className={styles.menuButton}>
             <CustomButton to="/about" label="О компании" />
             <CustomButton to="/services" label="Услуги" />
-            <CustomButton to="/submit" label="Отправить заявку" />
+            <CustomButton to="/submit" label="Контакты" />
           </div>
           <div className={styles.buttons}>
             {isAuth ? (
