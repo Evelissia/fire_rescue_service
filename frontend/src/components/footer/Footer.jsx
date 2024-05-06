@@ -7,13 +7,13 @@ export const Footer = () => {
   return (
     <footer className={styles.footerContainer}>
       <div className={styles.socialIcons}>
-        <a href="">
+        <a href="https://vk.com/bupssomsk">
           <i className="fa-brands fa-vk"></i>
         </a>
         <a href="">
           <i className="fa-brands fa-instagram"></i>
         </a>
-        <a href="">
+        <a href="https://t.me/bupssomsk">
           <i className="fa-brands fa-telegram"></i>
         </a>
         <a href="">

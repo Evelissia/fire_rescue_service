@@ -8,6 +8,7 @@ import ServicesPage from './pages/ServicesPage/ServicesPage.jsx';
 import Submit from './pages/Submit/Submit.jsx';
 import Login from './pages/Login/Login.jsx';
 import Register from './pages/Reagistration/Registration.jsx';
+import AdminPage from './pages/Admin/AdminPage.jsx';
 import './assets/style.css';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/submit" element={<Submit />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
         <Footer />
       </div>

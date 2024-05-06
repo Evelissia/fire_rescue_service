@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuth, selectIsAuth } from '../../redux/slices/auth.js';
 import { Navigate } from 'react-router-dom';
 
-// сделать запрос на то, чтобы сделать авторизацию
-
 const Login = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
@@ -38,7 +36,7 @@ const Login = () => {
   };
 
   if (isAuth) {
-    return <Navigate to="/" />;
+    return <Navigate to="/admin" />;
   }
 
   return (

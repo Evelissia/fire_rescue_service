@@ -6,3 +6,28 @@
 .email {
   margin-top: 20px;
 }
+
+.form {
+  display: flex;
+  width: 800px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mapContainer {
+  flex: 1;
+  width: 70%; /* Увеличьте ширину контейнера карты */
+  height: 100%; /* Установите высоту карты на 100% */
+  
+}
+
+.contactInfo {
+  flex: 1;
+  padding-left: 20px; /* Добавляем отступ слева для разделения карты и контактов */
+}

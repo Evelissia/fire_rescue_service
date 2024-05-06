@@ -5,18 +5,12 @@ import Cards from '../../components/Cards/Cards.jsx';
 import jsonData from './data.json';
 import { Link } from 'react-router-dom';
 
-// в главной странице мне нужно создать
-
-// 5. Отзывы клиентов аналогично предыдущим карточкам, но там будет со слайдером
-// 6. Компонент формы
-// 7. Карта
-
 const MainPage = () => {
   return (
     <div>
       <div>
         <Titles
-          title="Пожарно-спасательная служба. Ваши надежные помощники в борьбе с пожарами"
+          title="Диспетчеры пожарно-спасательной службы - ваши надежные помощники"
           subtitle="Наши работники примут и передадут исполнителям все заявки от жителей"
         />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -50,7 +44,7 @@ const MainPage = () => {
           />
         </div>
         <Titles
-          title="Профессиональные услуги Пожарно-диспетчерской службы"
+          title="Профессиональные услуги Пожарно-спасательной службы"
           subtitle="Оказываем профессиональные услуги по созданию отчетов о пожарах и ресурсов для пожарников."
         />
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
