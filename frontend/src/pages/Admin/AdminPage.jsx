@@ -21,10 +21,12 @@ const AdminPage = () => {
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Tab label="Новые" />
-        <Tab label="Популярные" />
+        <Tab label="Заявки" />
+        <Tab label="Отчеты" />
+        <Tab label="Ресурсы" />
+        <Tab label="Пользователи" />
       </Tabs>
-      <Grid container spacing={4}>
+      <Grid container spacing={10}>
         <Grid xs={8} item>
           {(isReportsLoading ? [...Array(5)] : reports.items).map((report, index) =>
             isReportsLoading ? (

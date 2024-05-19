@@ -3,7 +3,7 @@ import { YMaps, Map } from '@pbe/react-yandex-maps';
 import Button from '../../components/Button.jsx';
 import styles from './Submit.module.scss';
 
-const Submit = () => {
+const Contacts = () => {
   return (
     <div className="wrapper">
       <div className="content_body">
@@ -22,7 +22,7 @@ const Submit = () => {
                 <div className={styles.officeInfo}>
                   <h2>Наш офис</h2>
                   <h3>Омск</h3>
-                  <p>Улица Хорошая 1, корп.4, 5 этаж, офис 1</p>
+                  <p>Севастопольская улица, 4, Омск</p>
                 </div>
               </div>
               <div className="form__group">
@@ -37,4 +37,4 @@ const Submit = () => {
   );
 };
 
-export default Submit;
+export default Contacts;

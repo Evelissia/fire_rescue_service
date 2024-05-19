@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchRemoveReport } from '../../redux/slices/reports'; // Замените на нужный action
+import styles from './Reports.module.scss';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
 const Report = ({
   _id,
@@ -27,9 +30,9 @@ const Report = ({
   }
 
   return (
-    <div>
+    <div className={styles.root}>
       {isEditable && <div>{/*<button onClick={onClickRemove}>Удалить</button>*/}</div>}
-      <div>
+      <div className="">
         <h2>
           Location: {location.street}, {location.house}, {location.apartment}
         </h2>

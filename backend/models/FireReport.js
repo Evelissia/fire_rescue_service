@@ -4,9 +4,9 @@ const FireReportSchema = new mongoose.Schema(
   {
     location: {
       type: {
-        street: String, // улица
-        house: String, // дом
-        apartment: String, // квартира
+        street: String,
+        house: String,
+        apartment: String,
       },
       required: true,
     },
