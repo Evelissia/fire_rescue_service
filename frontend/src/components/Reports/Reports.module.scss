@@ -23,3 +23,29 @@ $blue: #7c8194;
     }
   }
 }
+
+.removeButton {
+  background-color: #E21249;
+  color: rgb(255, 255, 255);
+  margin: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  &:hover {
+    background-color: #3a3a3a; 
+  }
+}
+
+.editButton {
+  background-color: #ffffff;
+  color: #E21249;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  box-shadow: 0 4px 16px #b4b3b3;
+  transition: 0.3s;
+  flex-shrink: 0;
+  &:hover {
+    background-color: #989898; 
+  }
+}

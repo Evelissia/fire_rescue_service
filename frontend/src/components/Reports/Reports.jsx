@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchRemoveReport } from '../../redux/slices/reports'; // Замените на нужный action
+import { fetchRemoveReport } from '../../redux/slices/reports';
+import EditReportForm from '../../pages/Admin/EditReportForm';
 import styles from './Reports.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
+import Button from '../Button';
 
 const Report = ({
   _id,
@@ -18,12 +20,21 @@ const Report = ({
   isLoading,
 }) => {
   const dispatch = useDispatch();
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
-  /*const onClickRemove = () => {
+  const onClickRemove = () => {
     if (window.confirm('Вы действительно хотите удалить отчет?')) {
-      dispatch(fetchRemoveReport(_id)); // Замените на нужный action
+      dispatch(fetchRemoveReport(_id));
     }
-  };*/
+  };
+
+  const onClickEdit = () => {
+    setIsEditFormOpen(true);
+  };
+
+  const handleCloseEditForm = () => {
+    setIsEditFormOpen(false);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -31,7 +42,6 @@ const Report = ({
 
   return (
     <div className={styles.root}>
-      {isEditable && <div>{/*<button onClick={onClickRemove}>Удалить</button>*/}</div>}
       <div className="">
         <h2>
           Location: {location.street}, {location.house}, {location.apartment}
@@ -41,6 +51,26 @@ const Report = ({
         <p>Description: {description}</p>
         <p>resources: {resources}</p>
       </div>
+      <button
+        variant="contained"
+        color="primary"
+        onClick={onClickRemove}
+        className={styles.removeButton}>
+        Удалить
+      </button>
+      <button
+        variant="contained"
+        color="primary"
+        onClick={onClickEdit}
+        className={styles.editButton}>
+        Редактировать
+      </button>
+      {isEditFormOpen && (
+        <EditReportForm
+          report={{ _id, location, dangerLevel, areaSize, description, resources }}
+          onClose={handleCloseEditForm}
+        />
+      )}
     </div>
   );
 };

@@ -12,6 +12,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ReportIcon from '@mui/icons-material/Report';
 import ResourcesIcon from '@mui/icons-material/Build';
 import UsersIcon from '@mui/icons-material/Group';
+import { selectIsAuth } from '../../redux/slices/auth.js';
+import { Navigate } from 'react-router-dom';
 
 import theme from './theme.js';
 import CreateReportForm from './CreateReportForm.jsx';
@@ -19,22 +21,12 @@ import CreateReportForm from './CreateReportForm.jsx';
 const AdminPage = () => {
   const dispatch = useDispatch();
   const { reports } = useSelector((state) => state.reports);
+  const isAuth = useSelector(selectIsAuth);
 
   const isReportsLoading = reports.status === 'loading';
 
   const [tabIndex, setTabIndex] = useState(0);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [newReport, setNewReport] = useState({
-    location: {
-      street: '',
-      house: '',
-      apartment: '',
-    },
-    dangerLevel: '',
-    areaSize: '',
-    description: '',
-    resources: [],
-  });
 
   useEffect(() => {
     dispatch(fetchReports());
@@ -49,6 +41,10 @@ const AdminPage = () => {
   const handleCloseForm = () => {
     setIsFormOpen(false);
   };
+
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
