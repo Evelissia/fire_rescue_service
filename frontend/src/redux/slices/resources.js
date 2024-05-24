@@ -8,10 +8,18 @@ export const fetchResources = createAsyncThunk('resources/fetchResources', async
 });
 
 export const fetchRemoveResources = createAsyncThunk(
-  'resources/fetchRemoveResources', // Используем уникальный идентификатор
+  'resources/fetchRemoveResources',
   async (resourceId) => {
     await axios.delete(`/FireResources/${resourceId}`);
     return resourceId;
+  },
+);
+
+export const fetchAddResources = createAsyncThunk(
+  'resources/fetchAddResources',
+  async (newResource) => {
+    const { data } = await axios.post('/FireResources', newResource);
+    return data;
   },
 );
 
@@ -39,6 +47,9 @@ const resourcesSlice = createSlice({
       .addCase(fetchResources.rejected, (state) => {
         state.resources.items = [];
         state.resources.status = 'error';
+      })
+      .addCase(fetchAddResources.fulfilled, (state, action) => {
+        state.resources.items.push(action.payload);
       })
       .addCase(fetchRemoveResources.fulfilled, (state, action) => {
         state.resources.items = state.resources.items.filter(

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchReports, fetchAddReport } from '../../redux/slices/reports';
-import { fetchResources } from '../../redux/slices/resources.js';
+import { fetchResources, fetchAddResources } from '../../redux/slices/resources.js';
 import { ThemeProvider } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -19,6 +19,7 @@ import { Navigate } from 'react-router-dom';
 
 import theme from './theme.js';
 import CreateReportForm from './CreateReportForm.jsx';
+import CreateResourceForm from './CreateResourceForm.jsx';
 
 const AdminPage = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,12 @@ const AdminPage = () => {
 
   const handleCreateReport = (newReport) => {
     dispatch(fetchAddReport(newReport)).then(() => {
+      setIsFormOpen(false);
+    });
+  };
+
+  const handleCreateResource = (newResource) => {
+    dispatch(fetchAddResources(newResource)).then(() => {
       setIsFormOpen(false);
     });
   };
@@ -101,6 +108,16 @@ const AdminPage = () => {
           )}
           {tabIndex === 1 && (
             <Box>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setIsFormOpen(true)}
+                style={{ marginBottom: '20px' }}>
+                Создать ресурс
+              </Button>
+              {isFormOpen && (
+                <CreateResourceForm onSubmit={handleCreateResource} onClose={handleCloseForm} />
+              )}
               {(isResourcesLoading ? [...Array(5)] : resources.items).map((resource, index) =>
                 isResourcesLoading ? (
                   <Resources key={index} isLoading={true} />
