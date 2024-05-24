@@ -13,18 +13,19 @@ export const fetchRemoveReport = createAsyncThunk('reports/fetchRemoveReport', a
 
 export const fetchUpdateReport = createAsyncThunk(
   'reports/fetchUpdateReport',
-  async ({ reportId, updateOne }) => {
-    await axios.patch(`/fireReports/${reportId}`, updateOne);
-    return reportId;
+  async ({ reportId, updatedData }) => {
+    const { data } = await axios.patch(`/fireReports/${reportId}`, updatedData);
+    return { reportId, updatedData: data };
   },
 );
 
+export const fetchAddReport = createAsyncThunk('reports/fetchAddReport', async (newReport) => {
+  const { data } = await axios.post('/fireReports', newReport);
+  return data;
+});
+
 const initialState = {
   reports: {
-    items: [],
-    status: 'loading',
-  },
-  resources: {
     items: [],
     status: 'loading',
   },
@@ -51,12 +52,15 @@ const reportsSlice = createSlice({
       .addCase(fetchRemoveReport.fulfilled, (state, action) => {
         state.reports.items = state.reports.items.filter((report) => report._id !== action.payload);
       })
+      .addCase(fetchAddReport.fulfilled, (state, action) => {
+        state.reports.items.push(action.payload);
+      })
       .addCase(fetchUpdateReport.fulfilled, (state, action) => {
-        const updatedReportIndex = state.reports.items.findIndex(
+        const index = state.reports.items.findIndex(
           (report) => report._id === action.payload.reportId,
         );
-        if (updatedReportIndex !== -1) {
-          state.reports.items[updatedReportIndex] = action.payload.updatedReport;
+        if (index !== -1) {
+          state.reports.items[index] = action.payload.updatedData;
         }
       });
   },

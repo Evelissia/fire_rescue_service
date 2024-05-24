@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Alert } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { fetchAddReport } from '../../redux/slices/reports';
 
 const CreateReportForm = ({ onSubmit, onClose }) => {
+  const dispatch = useDispatch();
   const [newReport, setNewReport] = useState({
     location: {
       street: '',
@@ -14,6 +17,9 @@ const CreateReportForm = ({ onSubmit, onClose }) => {
     resources: [],
   });
 
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewReport((prev) => ({
@@ -25,12 +31,55 @@ const CreateReportForm = ({ onSubmit, onClose }) => {
     }));
   };
 
+  const validateForm = () => {
+    if (
+      !newReport.location.street ||
+      !newReport.location.house ||
+      !newReport.location.apartment ||
+      !newReport.dangerLevel ||
+      !newReport.areaSize ||
+      !newReport.description
+    ) {
+      setError('Все поля должны быть заполнены');
+      return false;
+    }
+    setError('');
+    return true;
+  };
+
   const handleSubmit = () => {
-    onSubmit(newReport);
+    if (!validateForm()) {
+      return;
+    }
+
+    dispatch(fetchAddReport(newReport))
+      .then(() => {
+        setSuccess('Отчет успешно создан');
+        setNewReport({
+          location: {
+            street: '',
+            house: '',
+            apartment: '',
+          },
+          dangerLevel: '',
+          areaSize: '',
+          description: '',
+          resources: [],
+        });
+        setTimeout(() => {
+          setSuccess('');
+          onClose();
+        }, 3000);
+      })
+      .catch(() => {
+        setError('Не удалось создать отчет');
+      });
   };
 
   return (
     <Box component="form" noValidate autoComplete="off">
+      {error && <Alert severity="error">{error}</Alert>}
+      {success && <Alert severity="success">{success}</Alert>}
       <TextField
         label="Улица"
         name="street"

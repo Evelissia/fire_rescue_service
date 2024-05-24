@@ -2,20 +2,23 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchUpdateReport } from '../../redux/slices/reports';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Alert } from '@mui/material';
 
 const EditReportForm = ({ report, onClose }) => {
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [formData, setFormData] = useState({
     location: {
-      street: report.location.street,
-      house: report.location.house,
-      apartment: report.location.apartment,
+      street: report.location?.street || '',
+      house: report.location?.house || '',
+      apartment: report.location?.apartment || '',
     },
-    dangerLevel: report.dangerLevel,
-    areaSize: report.areaSize,
-    description: report.description,
-    resources: report.resources,
+    dangerLevel: report.dangerLevel || '',
+    areaSize: report.areaSize || '',
+    description: report.description || '',
+    resources: report.resources || [],
   });
 
   const handleChange = (e) => {
@@ -32,13 +35,28 @@ const EditReportForm = ({ report, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchUpdateReport(report._id, formData)).then(() => {
-      onClose();
-    });
+    setLoading(true);
+
+    dispatch(fetchUpdateReport({ reportId: report._id, updatedData: formData }))
+      .then(() => {
+        setSuccess('Отчет успешно обновлен');
+        setTimeout(() => {
+          setSuccess('');
+          onClose();
+        }, 3000);
+      })
+      .catch(() => {
+        setError('Не удалось обновить отчет');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
     <Box component="form" noValidate autoComplete="off">
+      {error && <Alert severity="error">{error}</Alert>}
+      {success && <Alert severity="success">{success}</Alert>}
       <TextField
         label="Улица"
         name="location.street"

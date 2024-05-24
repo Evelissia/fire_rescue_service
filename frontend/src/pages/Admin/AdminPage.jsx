@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchReports } from '../../redux/slices/reports';
+import { fetchReports, fetchAddReport } from '../../redux/slices/reports';
+import { fetchResources } from '../../redux/slices/resources.js';
 import { ThemeProvider } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Report from '../../components/Reports/Reports';
+import Resources from '../../components/Resources/Resources.jsx';
 
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ReportIcon from '@mui/icons-material/Report';
@@ -21,22 +23,29 @@ import CreateReportForm from './CreateReportForm.jsx';
 const AdminPage = () => {
   const dispatch = useDispatch();
   const { reports } = useSelector((state) => state.reports);
+  const { resources } = useSelector((state) => state.resources);
   const isAuth = useSelector(selectIsAuth);
 
   const isReportsLoading = reports.status === 'loading';
+  const isResourcesLoading = resources.status === 'loading';
 
   const [tabIndex, setTabIndex] = useState(0);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchReports());
+    dispatch(fetchResources());
   }, [dispatch]);
 
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
   };
 
-  const handleCreateReport = () => {};
+  const handleCreateReport = (newReport) => {
+    dispatch(fetchAddReport(newReport)).then(() => {
+      setIsFormOpen(false);
+    });
+  };
 
   const handleCloseForm = () => {
     setIsFormOpen(false);
@@ -56,14 +65,12 @@ const AdminPage = () => {
           onChange={handleTabChange}
           aria-label="Vertical tabs example"
           style={{ borderRight: `1px solid #ddd`, width: '200px' }}>
-          <Tab icon={<AssignmentIcon />} label="Заявки" />
           <Tab icon={<ReportIcon />} label="Отчеты" />
           <Tab icon={<ResourcesIcon />} label="Ресурсы" />
           <Tab icon={<UsersIcon />} label="Пользователи" />
         </Tabs>
         <Box style={{ flex: 1, padding: 20 }}>
-          {tabIndex === 0 && <div>Здесь будет контент для заявок</div>}
-          {tabIndex === 1 && (
+          {tabIndex === 0 && (
             <Box>
               <Button
                 variant="contained"
@@ -92,8 +99,24 @@ const AdminPage = () => {
               )}
             </Box>
           )}
-          {tabIndex === 2 && <div>Здесь будет контент для ресурсов</div>}
-          {tabIndex === 3 && <div>Здесь будет контент для пользователей</div>}
+          {tabIndex === 1 && (
+            <Box>
+              {(isResourcesLoading ? [...Array(5)] : resources.items).map((resource, index) =>
+                isResourcesLoading ? (
+                  <Resources key={index} isLoading={true} />
+                ) : (
+                  <Resources
+                    key={resource._id}
+                    _id={resource._id}
+                    name={resource.name}
+                    type={resource.type}
+                    status={resource.status}
+                  />
+                ),
+              )}
+            </Box>
+          )}
+          {tabIndex === 2 && <div>Здесь будет контент для пользователей</div>}
         </Box>
       </Box>
     </ThemeProvider>

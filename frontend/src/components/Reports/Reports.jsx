@@ -3,9 +3,6 @@ import { useDispatch } from 'react-redux';
 import { fetchRemoveReport } from '../../redux/slices/reports';
 import EditReportForm from '../../pages/Admin/EditReportForm';
 import styles from './Reports.module.scss';
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
-import Button from '../Button';
 
 const Report = ({
   _id,
@@ -44,12 +41,13 @@ const Report = ({
     <div className={styles.root}>
       <div className="">
         <h2>
-          Location: {location.street}, {location.house}, {location.apartment}
+          Location: {location.street || 'N/A'}, {location.house || 'N/A'},{' '}
+          {location.apartment || 'N/A'}
         </h2>
         <p>Danger Level: {dangerLevel}</p>
         <p>Area Size: {areaSize}</p>
         <p>Description: {description}</p>
-        <p>resources: {resources}</p>
+        <p>Resources: {resources.join(', ')}</p>
       </div>
       <button
         variant="contained"

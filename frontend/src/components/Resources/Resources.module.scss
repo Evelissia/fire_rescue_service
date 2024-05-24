@@ -1,0 +1,51 @@
+$blue: #7c8194;
+
+.root {
+  background-color: #fff;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 30px 60px;
+  position: relative;
+
+
+  &:hover {
+    border: 1px solid $blue;
+    box-shadow: 0 0 0 1px $blue;
+
+  }
+
+  &Full {
+    &:hover {
+      background-color: #fff;
+      border: 1px solid #dedede;
+      box-shadow: none;
+    }
+  }
+}
+
+.removeButton {
+  background-color: #E21249;
+  color: rgb(255, 255, 255);
+  margin: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  &:hover {
+    background-color: #3a3a3a; 
+  }
+}
+
+.editButton {
+  background-color: #ffffff;
+  color: #E21249;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  box-shadow: 0 4px 16px #b4b3b3;
+  transition: 0.3s;
+  flex-shrink: 0;
+  &:hover {
+    background-color: #989898; 
+  }
+}
