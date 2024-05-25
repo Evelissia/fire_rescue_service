@@ -4,8 +4,8 @@ import Titles from '../../components/Titles.jsx';
 
 const About = () => {
   return (
-    <div className={styles.about_container}>
-      <div className={styles.about_description}>
+    <div className="wrapper">
+      <div className="content_body">
         <Titles
           title="О нас"
           subtitle="Мы - ваша надежная пожарно-спасательная служба, готовая помочь в любое время суток"

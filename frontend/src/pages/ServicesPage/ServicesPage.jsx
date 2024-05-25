@@ -10,12 +10,19 @@ import Titles from '../../components/Titles.jsx';
 
 const ServicesPage = () => {
   return (
-    <div>
-      <Titles title="Наши услуги" />
-      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-        {jsonData.map((item, index) => (
-          <Cards key={index} title={item.title} description={item.description} image={item.image} />
-        ))}
+    <div className="wrapper">
+      <div className="content_body">
+        <Titles title="Наши услуги" />
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+          {jsonData.map((item, index) => (
+            <Cards
+              key={index}
+              title={item.title}
+              description={item.description}
+              image={item.image}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

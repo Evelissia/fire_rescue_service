@@ -21,7 +21,7 @@ const CreateResourceForm = ({ onSubmit, onClose }) => {
   const [newResource, setNewResource] = useState({
     name: '',
     type: '',
-    status: 'available', // default status
+    status: 'available',
   });
 
   const [error, setError] = useState('');
